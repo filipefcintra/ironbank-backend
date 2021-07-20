@@ -79,4 +79,18 @@ router.get(
   }
 );
 
+//Rota para criação de novos cartões para o usuário
+
+router.put(
+  "/account/create-card",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res, next) => {
+    try {
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;
