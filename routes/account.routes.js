@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const ObjectId = require("mongoose").Schema.Types.ObjectId;
 const bcrypt = require("bcrypyjs");
 const salt = 10;
 
@@ -141,6 +142,28 @@ router.put(
   }
 );
 
+//Deletar um cartão
+
+router.delete(
+  "/account/:id/delete-card/:cardId",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res, next) => {
+    try {
+      const { id, cardId } = req.params;
+      const updatedAccount = await AccountModel.findOneAndUpdate(
+        { _id: id },
+        {
+          $pull: { cards: { $elemMatch: { _id: new ObjectId(cardId) } } },
+        }
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// Deletar uma conta
 router.delete(
   "/account/:id",
   isAuthenticated,
