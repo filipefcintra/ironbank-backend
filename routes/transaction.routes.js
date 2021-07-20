@@ -33,7 +33,7 @@ router.post(
       if (!updatedAccount) {
         return res.status(404).json({ error: "Conta não encontrada" });
       }
-
+      //Colocando a transação no perfil do usuário
       const updatedUser = await UserModel.findOneAndUpdate(
         { _id: loggedInUser._id },
         { $push: { transactions: newTransaction._id } }

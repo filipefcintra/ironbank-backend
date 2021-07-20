@@ -7,7 +7,7 @@ const AccountSchema = new Schema({
   type: {
     type: String,
     required: true,
-    enum: ["Conta Corrente", "Conta Poupança"],
+    enum: ["Conta Corrente", "Conta Poupança", "Compra no cartão"],
   },
   balance: { type: Number, required: true, default: 0 },
   cards: [
