@@ -3,6 +3,7 @@ const router = express.Router();
 
 const AccountModel = require("../models/Account.model");
 const TransactionModel = require("../models/Transaction.model");
+const UserModel = require("../models/User.model");
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
@@ -14,6 +15,7 @@ router.post(
   async (req, res, next) => {
     try {
       const { accountId, amount } = req.body;
+      const loggedInUser = req.currentUser;
 
       //Criando transação
       const newTransaction = await TransactionModel.create({ ...req.body });
@@ -31,6 +33,11 @@ router.post(
       if (!updatedAccount) {
         return res.status(404).json({ error: "Conta não encontrada" });
       }
+
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { _id: loggedInUser._id },
+        { $push: { transactions: newTransaction._id } }
+      );
 
       return res.status(200).json(newTransaction);
     } catch (error) {
