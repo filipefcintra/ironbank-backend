@@ -24,6 +24,14 @@ router.post(
       const accountNumber = lastInsertedAccount
         ? lastInsertedAccount.accountNumber + 1
         : 1;
+
+      const newAccount = await AccountModel.create({
+        userId: loggedInUser._id,
+        accountNumber: accountNumber,
+        type: type,
+      });
+
+      return res.status(201).json(newAccount);
     } catch (err) {
       next(err);
     }
