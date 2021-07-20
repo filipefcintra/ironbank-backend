@@ -15,9 +15,10 @@ router.post(
       const { type } = req.body;
       const loggedInUser = req.currentUser;
 
-      const lastInsertedAccount = AccountModel.find(
+      const lastInsertedAccount = await AccountModel.findOne(
         {},
-        { accountNumber: 1, _id: 0 }
+        { accountNumber: 1, _id: 0 },
+        { sort: { accountNumber: -1 }, limit: 1 }
       )
         .sort({ accountNumber: -1 })
         .limit(1);
