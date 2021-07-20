@@ -15,6 +15,9 @@ app.use("/api", userRouter);
 const accountRouter = require("./routes/account.routes");
 app.use("/api", accountRouter);
 
+const transactionRouter = require("./routes/transaction.routes");
+app.use("/api", transactionRouter);
+
 app.listen(Number(process.env.PORT), () =>
   console.log(`Server up and running at port ${process.env.PORT}`)
 );

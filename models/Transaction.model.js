@@ -9,6 +9,7 @@ const TransactionSchema = new Schema(
       enum: ["Transferência", "Pagamentos"],
     },
     amount: { type: Number, required: true, min: 1 },
+    sender: { type: String, required: true },
     receiver: { type: String, required: true },
     category: { type: String, default: "Outros" },
     accountId: { type: mongoose.Schema.Types.ObjectId, ref: "Account" },
