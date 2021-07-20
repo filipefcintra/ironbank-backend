@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema({
@@ -34,6 +35,7 @@ const UserSchema = new Schema({
   birthDate: { type: Date, required: true },
   phoneNumber: { type: String, trim: true },
   document: { type: String, required: true, trim: true },
+  transactions: { type: mongoose.Schema.Types.ObjectId, ref: "Transaction" },
 });
 
 const UserModel = model("User", UserSchema);
