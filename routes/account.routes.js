@@ -87,16 +87,48 @@ router.put(
   attachCurrentUser,
   async (req, res, next) => {
     try {
-        const {id} = req.params;
-        const {pin} = req.body;
+      const { id } = req.params;
+      const { pin } = req.body;
 
-        const generatedCardNumber = String(Math.floor(1000000000000000 + Math.random() * 9999999999999999)).slice(-16);
-        const generateValidThru;
-        const generatedSecurityCode = String(Math.floor(100 + Math.random() * 999)).slice(-3);
+      //Logica para gerar numero de 16 digitos para o cartao de maneira aleatorio
+      const generatedCardNumber = String(
+        Math.floor(1000000000000000 + Math.random() * 9999999999999999)
+      ).slice(-16);
 
+      //Logica para gerar data de validade do cartão com base na data atual + 5 anos
+      const now = new Date();
+      now.setFullYear(now.getFullYear() + 5);
 
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const year = String(now.getYear()).slice(-2);
 
-        
+      const generatedValidThru = `${month}/${year}`;
+
+      // Logica para gerar codigo de segurança aleatorio
+      const generatedSecurityCode = String(
+        Math.floor(100 + Math.random() * 999)
+      ).slice(-3);
+
+      const newCard = await AccountModel.findOne(
+        { _id: id },
+        {
+          $push: {
+            cards: {
+              pin: pin,
+              number: generatedCardNumber,
+              validThru: generatedValidThru,
+              securityCode: generatedSecurityCode,
+            },
+          },
+        },
+        { new: true }
+      );
+
+      if (!newCard) {
+        return res.status(404).json({ error: "Conta não encontrada." });
+      }
+
+      return res.status(200).json(newCard);
     } catch (err) {
       next(err);
     }
