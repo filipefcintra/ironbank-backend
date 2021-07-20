@@ -87,6 +87,16 @@ router.put(
   attachCurrentUser,
   async (req, res, next) => {
     try {
+        const {id} = req.params;
+        const {pin} = req.body;
+
+        const generatedCardNumber = String(Math.floor(1000000000000000 + Math.random() * 9999999999999999)).slice(-16);
+        const generateValidThru;
+        const generatedSecurityCode = String(Math.floor(100 + Math.random() * 999)).slice(-3);
+
+
+
+        
     } catch (err) {
       next(err);
     }

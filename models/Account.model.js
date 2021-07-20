@@ -21,6 +21,7 @@ const AccountSchema = new Schema({
         maxLength: 3,
       },
       flag: { type: String, required: true, default: "Mastercard" },
+      pin: { type: String, required: true, minlength: 4, maxlength: 4 },
     }),
   ],
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
