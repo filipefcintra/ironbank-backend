@@ -28,9 +28,11 @@ router.post(
         }
       );
 
-      if (!updateAccount) {
-        return res.status(404).json({ error: "" });
+      if (!updatedAccount) {
+        return res.status(404).json({ error: "Conta não encontrada" });
       }
+
+      return res.status(200).json(newTransaction);
     } catch (error) {
       next(error);
     }

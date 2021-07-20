@@ -8,7 +8,7 @@ const TransactionSchema = new Schema(
       required: true,
       enum: ["Transferência", "Pagamentos"],
     },
-    amount: { type: Number, required: true, min: 1 },
+    amount: { type: Number, required: true },
     sender: { type: String, required: true },
     receiver: { type: String, required: true },
     category: { type: String, default: "Outros" },
