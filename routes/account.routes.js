@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypyjs");
+const salt = 10;
 
 const AccountModel = require("../models/Account.model");
 
@@ -90,6 +92,10 @@ router.put(
       const { id } = req.params;
       const { pin } = req.body;
 
+      // Criptografando o PIN do cartão
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hashedPin = bcrypt.hashSync(pin, salt);
+
       //Logica para gerar numero de 16 digitos para o cartao de maneira aleatorio
       const generatedCardNumber = String(
         Math.floor(1000000000000000 + Math.random() * 9999999999999999)
@@ -114,7 +120,7 @@ router.put(
         {
           $push: {
             cards: {
-              pin: pin,
+              pin: hashedPin,
               number: generatedCardNumber,
               validThru: generatedValidThru,
               securityCode: generatedSecurityCode,

@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     ).populate({
       path: "transactions",
       model: "Transaction",
-    }); //Utilizando o populate para preencher os objetos de transação através do ID armazenado e da referência no modelo
+    }); //Utilizando o populate para preencher os objetos de transação através do ID armazenado e da referência no modelo (populate so funciona para modelos separados ligados por uma ref.)
 
     if (!user) {
       // 400 significa Bad Request
