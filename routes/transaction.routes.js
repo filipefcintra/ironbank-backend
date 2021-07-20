@@ -39,4 +39,25 @@ router.post(
   }
 );
 
+// Vizualização das transações da conta (extrato)
+
+router.get(
+  "/transaction/:accountId",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res, next) => {
+    try {
+      const { accountId } = req.params;
+
+      const transactions = await TransactionModel.find({
+        accountId: accountId,
+      });
+
+      return res.status(200).json(transactions);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;
