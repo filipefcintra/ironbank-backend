@@ -20,6 +20,7 @@ router.post(
         { accountNumber: 1, _id: 0 },
         { sort: { accountNumber: -1 }, limit: 1 }
       );
+      // Criando numeros de conta de maneira automática e sequencial.
       const accountNumber = lastInsertedAccount
         ? lastInsertedAccount.accountNumber + 1
         : 1;
