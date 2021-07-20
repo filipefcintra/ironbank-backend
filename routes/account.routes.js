@@ -6,6 +6,7 @@ const AccountModel = require("../models/Account.model");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 
+// Criando nova conta
 router.post(
   "/account",
   isAuthenticated,
@@ -32,6 +33,46 @@ router.post(
       });
 
       return res.status(201).json(newAccount);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Vizualização de conta unica
+
+router.get(
+  "/account/:id",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const account = await AccountModel.findOne({ _id: id });
+
+      return res.status(200).json(account);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Todas as contas do usuários
+
+router.get(
+  "/account",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res, next) => {
+    try {
+      const loggedInUser = req.currentUser;
+      const accounts = await AccountModel.find({ userId: loggedInUser._id });
+      //Exemplo de regra de negócio
+      if (!accounts) {
+        return res.status(404).json({ error: "Você ainda não tem uma conta." });
+      }
+
+      return res.status(200).json(accounts);
     } catch (err) {
       next(err);
     }
