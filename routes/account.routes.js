@@ -19,9 +19,10 @@ router.post(
         {},
         { accountNumber: 1, _id: 0 },
         { sort: { accountNumber: -1 }, limit: 1 }
-      )
-        .sort({ accountNumber: -1 })
-        .limit(1);
+      );
+      const accountNumber = lastInsertedAccount
+        ? lastInsertedAccount.accountNumber + 1
+        : 1;
     } catch (err) {
       next(err);
     }
