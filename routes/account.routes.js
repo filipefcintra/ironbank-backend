@@ -24,7 +24,7 @@ router.post(
       const accountNumber = lastInsertedAccount
         ? lastInsertedAccount.accountNumber + 1
         : 1;
-
+      // Inserindo contas no banco de dados
       const newAccount = await AccountModel.create({
         userId: loggedInUser._id,
         accountNumber: accountNumber,

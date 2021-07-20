@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 
 const AccountSchema = new Schema({
   agency: { type: String, required: true, default: "001" },
-  accountNumber: { type: String, required: true },
+  accountNumber: { type: String, required: true, unique: true },
   type: {
     type: String,
     required: true,
