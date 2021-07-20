@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const ObjectId = require("mongoose").Types.ObjectId;
 const bcrypt = require("bcrypyjs");
 const salt = 10;
 
@@ -154,7 +153,7 @@ router.delete(
       const updatedAccount = await AccountModel.findOneAndUpdate(
         { _id: id },
         {
-          $pull: { cards: { _id: new ObjectId(cardId) } },
+          $pull: { cards: { _id: cardId } },
         }
       );
     } catch (error) {
